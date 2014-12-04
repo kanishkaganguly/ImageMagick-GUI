@@ -3,6 +3,10 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -24,6 +28,9 @@ public class main extends javax.swing.JFrame {
     File[] input_img = null;
     File output_loc = null;
     File save_path = null;
+    File temp_path = null;
+    File temp_create = null;
+    File output_filename = null;
     int curr_img = 0;
 
     /**
@@ -338,13 +345,28 @@ public class main extends javax.swing.JFrame {
 
         FX_lbl.setText("Select Effect:");
 
-        effect_choose.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Rotate", "Vertical Mirror", "Horizontal Mirror", "Charcoal Effect", "Auto-Level", "Polaroid Effect", "Grayscale", "Vignette" }));
+        effect_choose.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vertical Mirror", "Horizontal Mirror", "Charcoal Effect", "Auto-Level", "Polaroid Effect", "Grayscale", "Vignette", "Rotate" }));
+        effect_choose.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                effect_chooseItemStateChanged(evt);
+            }
+        });
 
         preview_btn.setText("Preview");
+        preview_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                preview_btnMouseClicked(evt);
+            }
+        });
 
         clearFX_btn.setText("Clear");
 
         saveFX_btn.setText("Save to File");
+        saveFX_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                saveFX_btnMouseClicked(evt);
+            }
+        });
 
         angle_lbl.setText("Set Angle:");
 
@@ -453,7 +475,7 @@ public class main extends javax.swing.JFrame {
         fc.setDialogTitle("Choose Input Image");
         fc.setFileFilter(new file_filter());
         fc.setMultiSelectionEnabled(true);
-        fc.setCurrentDirectory(new File("/media/ext_TV/Images"));
+        fc.setCurrentDirectory(new File("/media/ext_TV/Images/Extras"));
         fc.showOpenDialog(this);
         input_img = fc.getSelectedFiles();
         if (input_img.length >= 1) {
@@ -632,6 +654,72 @@ public class main extends javax.swing.JFrame {
             pdf_filename.setEnabled(false);
         }
     }//GEN-LAST:event_outputFileTypeItemStateChanged
+
+    private void preview_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_preview_btnMouseClicked
+        temp_create = null;
+        temp_path = null;
+        output_filename = null;
+        temp_create = new File(System.getProperty("java.io.tmpdir") + "/imagemagick_preview");
+        if (!temp_create.exists()) {
+            new File(System.getProperty("java.io.tmpdir") + "/imagemagick_preview").mkdir();
+        }
+
+        temp_path = new File(System.getProperty("java.io.tmpdir") + "/imagemagick_preview/" + input_img[curr_img].getName());
+        output_filename = new File(save_path.toString() + "/" + input_img[curr_img].getName());
+        Path from = Paths.get(input_img[curr_img].getPath());
+        Path to = Paths.get(temp_path.getPath());
+        new copyImage(from, to);
+
+        switch (effect_choose.getSelectedItem().toString()) {
+            case "Rotate": {
+                try {
+                    String execString = "convert '" + temp_path + "' -rotate " + angle_in.getText() + " " + input_img[curr_img].getName();
+                    Runtime run = Runtime.getRuntime();
+                    Process process = run.exec(new String[]{"/bin/bash", "-c", execString}, null, temp_create);
+                    process.waitFor();
+                    BufferedImage img = ImageIO.read(temp_path);
+                    Image img_scaled = img.getScaledInstance(output_preview.getWidth(), output_preview.getHeight(), Image.SCALE_SMOOTH);
+                    output_preview.setIcon(new ImageIcon(img_scaled));
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e);
+                }
+                break;
+            }
+            case "Polaroid Effect": {
+                try {
+                    String execString = "convert '" + temp_path + "' -polaroid " + angle_in.getText() + " " + input_img[curr_img].getName();
+                    Runtime run = Runtime.getRuntime();
+                    Process process = run.exec(new String[]{"/bin/bash", "-c", execString}, null, temp_create);
+                    process.waitFor();
+                    BufferedImage img = ImageIO.read(temp_path);
+                    Image img_scaled = img.getScaledInstance(output_preview.getWidth(), output_preview.getHeight(), Image.SCALE_SMOOTH);
+                    output_preview.setIcon(new ImageIcon(img_scaled));
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e);
+                }
+                break;
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, "Effects Applied Successfully", "Effects Applied", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_preview_btnMouseClicked
+
+    private void effect_chooseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_effect_chooseItemStateChanged
+        if (effect_choose.getSelectedItem().equals("Rotate") || effect_choose.getSelectedItem().equals("Polaroid Effect")) {
+            angle_in.setEnabled(true);
+        } else {
+            angle_in.setEnabled(false);
+        }
+    }//GEN-LAST:event_effect_chooseItemStateChanged
+
+    private void saveFX_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveFX_btnMouseClicked
+        Path from2 = Paths.get(temp_path.getPath());
+        Path to2 = Paths.get(output_filename.getPath());
+        new copyImage(from2, to2);
+        if (removeDirectory.removeDirectory(temp_create) == false) {
+            System.out.println("ERROR REMOVING TEMP DIRECTORY");
+        }
+    }//GEN-LAST:event_saveFX_btnMouseClicked
 
     /**
      * @param args the command line arguments

@@ -567,22 +567,28 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="8">
-                    <StringItem index="0" value="Rotate"/>
-                    <StringItem index="1" value="Vertical Mirror"/>
-                    <StringItem index="2" value="Horizontal Mirror"/>
-                    <StringItem index="3" value="Charcoal Effect"/>
-                    <StringItem index="4" value="Auto-Level"/>
-                    <StringItem index="5" value="Polaroid Effect"/>
-                    <StringItem index="6" value="Grayscale"/>
-                    <StringItem index="7" value="Vignette"/>
+                    <StringItem index="0" value="Vertical Mirror"/>
+                    <StringItem index="1" value="Horizontal Mirror"/>
+                    <StringItem index="2" value="Charcoal Effect"/>
+                    <StringItem index="3" value="Auto-Level"/>
+                    <StringItem index="4" value="Polaroid Effect"/>
+                    <StringItem index="5" value="Grayscale"/>
+                    <StringItem index="6" value="Vignette"/>
+                    <StringItem index="7" value="Rotate"/>
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="effect_chooseItemStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="preview_btn">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Preview"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="preview_btnMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="clearFX_btn">
               <Properties>
@@ -593,6 +599,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save to File"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="saveFX_btnMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="angle_lbl">
               <Properties>
