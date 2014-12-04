@@ -65,6 +65,16 @@ public class main extends javax.swing.JFrame {
         next_btn = new javax.swing.JButton();
         count_lbl = new javax.swing.JLabel();
         img_count = new javax.swing.JLabel();
+        output_panel = new javax.swing.JPanel();
+        output_preview = new javax.swing.JLabel();
+        FX_panel = new javax.swing.JPanel();
+        FX_lbl = new javax.swing.JLabel();
+        effect_choose = new javax.swing.JComboBox();
+        preview_btn = new javax.swing.JButton();
+        clearFX_btn = new javax.swing.JButton();
+        saveFX_btn = new javax.swing.JButton();
+        angle_lbl = new javax.swing.JLabel();
+        angle_in = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ImageMagick GUI");
@@ -313,11 +323,95 @@ public class main extends javax.swing.JFrame {
                     .addComponent(input_shower, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(conversion_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(conversion_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(input_panelLayout.createSequentialGroup()
-                        .addGap(0, 12, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(output_control, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+        );
+
+        output_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Output Image"));
+
+        output_preview.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        FX_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Effects"));
+
+        FX_lbl.setText("Select Effect:");
+
+        effect_choose.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Rotate", "Vertical Mirror", "Horizontal Mirror", "Charcoal Effect", "Auto-Level", "Polaroid Effect", "Grayscale", "Vignette" }));
+
+        preview_btn.setText("Preview");
+
+        clearFX_btn.setText("Clear");
+
+        saveFX_btn.setText("Save to File");
+
+        angle_lbl.setText("Set Angle:");
+
+        angle_in.setEnabled(false);
+
+        javax.swing.GroupLayout FX_panelLayout = new javax.swing.GroupLayout(FX_panel);
+        FX_panel.setLayout(FX_panelLayout);
+        FX_panelLayout.setHorizontalGroup(
+            FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FX_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(saveFX_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(FX_panelLayout.createSequentialGroup()
+                        .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(FX_panelLayout.createSequentialGroup()
+                                .addComponent(FX_lbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(effect_choose, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(FX_panelLayout.createSequentialGroup()
+                                .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(preview_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(angle_lbl))
+                                .addGap(18, 18, 18)
+                                .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(FX_panelLayout.createSequentialGroup()
+                                        .addComponent(clearFX_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(angle_in))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+
+        FX_panelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {clearFX_btn, preview_btn});
+
+        FX_panelLayout.setVerticalGroup(
+            FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FX_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(FX_lbl)
+                    .addComponent(effect_choose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(angle_lbl)
+                    .addComponent(angle_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(preview_btn)
+                    .addComponent(clearFX_btn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(saveFX_btn)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout output_panelLayout = new javax.swing.GroupLayout(output_panel);
+        output_panel.setLayout(output_panelLayout);
+        output_panelLayout.setHorizontalGroup(
+            output_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(output_preview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(FX_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        output_panelLayout.setVerticalGroup(
+            output_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(output_panelLayout.createSequentialGroup()
+                .addComponent(output_preview, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(FX_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -330,7 +424,8 @@ public class main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(input_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(output_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(heading_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -342,7 +437,9 @@ public class main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(input_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(input_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(output_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -526,7 +623,6 @@ public class main extends javax.swing.JFrame {
             System.out.println(e);
         }
 
-
     }//GEN-LAST:event_convert_btnMouseClicked
 
     private void outputFileTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_outputFileTypeItemStateChanged
@@ -578,10 +674,16 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel FX_lbl;
+    private javax.swing.JPanel FX_panel;
+    private javax.swing.JTextField angle_in;
+    private javax.swing.JLabel angle_lbl;
+    private javax.swing.JButton clearFX_btn;
     private javax.swing.JButton clear_btn;
     private javax.swing.JPanel conversion_panel;
     private javax.swing.JButton convert_btn;
     private javax.swing.JLabel count_lbl;
+    private javax.swing.JComboBox effect_choose;
     private javax.swing.JButton exit_btn;
     private javax.swing.JLabel filename_lbl;
     private javax.swing.JLabel filename_out;
@@ -594,8 +696,12 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton next_btn;
     private javax.swing.JComboBox outputFileType;
     private javax.swing.JPanel output_control;
+    private javax.swing.JPanel output_panel;
+    private javax.swing.JLabel output_preview;
     private javax.swing.JTextField pdf_filename;
     private javax.swing.JButton prev_btn;
+    private javax.swing.JButton preview_btn;
+    private javax.swing.JButton saveFX_btn;
     private javax.swing.JButton savePath_btn;
     private javax.swing.JTextArea save_out;
     private javax.swing.JButton select_btn;
