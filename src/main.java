@@ -84,6 +84,10 @@ public class main extends javax.swing.JFrame {
         saveFX_btn = new javax.swing.JButton();
         angle_lbl = new javax.swing.JLabel();
         angle_in = new javax.swing.JTextField();
+        brightness_lbl = new javax.swing.JLabel();
+        contrast_lbl = new javax.swing.JLabel();
+        brightness_in = new javax.swing.JSlider();
+        contrast_in = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ImageMagick GUI");
@@ -202,7 +206,7 @@ public class main extends javax.swing.JFrame {
             .addGroup(output_controlLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(savePath_btn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(save_out, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -372,7 +376,7 @@ public class main extends javax.swing.JFrame {
 
         FX_lbl.setText("Select Effect:");
 
-        effect_choose.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vertical Mirror", "Horizontal Mirror", "Charcoal Effect", "Auto-Level", "Polaroid Effect", "Grayscale", "Vignette", "Rotate" }));
+        effect_choose.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Auto-Level", "Rotate", "Brightness/Contrast", "Vertical Mirror", "Horizontal Mirror", "Charcoal Effect", "Polaroid Effect", "Grayscale", "Vignette" }));
         effect_choose.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 effect_chooseItemStateChanged(evt);
@@ -386,7 +390,12 @@ public class main extends javax.swing.JFrame {
             }
         });
 
-        clearFX_btn.setText("Clear");
+        clearFX_btn.setText("Reset");
+        clearFX_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clearFX_btnMouseClicked(evt);
+            }
+        });
 
         saveFX_btn.setText("Save to File");
         saveFX_btn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -399,6 +408,25 @@ public class main extends javax.swing.JFrame {
 
         angle_in.setEnabled(false);
 
+        brightness_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        brightness_lbl.setText("Brightness");
+        brightness_lbl.setEnabled(false);
+
+        contrast_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        contrast_lbl.setText("Contrast");
+        contrast_lbl.setEnabled(false);
+
+        brightness_in.setMajorTickSpacing(1);
+        brightness_in.setMinimum(-100);
+        brightness_in.setValue(0);
+        brightness_in.setEnabled(false);
+
+        contrast_in.setMajorTickSpacing(1);
+        contrast_in.setMinimum(-100);
+        contrast_in.setToolTipText("");
+        contrast_in.setValue(0);
+        contrast_in.setEnabled(false);
+
         javax.swing.GroupLayout FX_panelLayout = new javax.swing.GroupLayout(FX_panel);
         FX_panel.setLayout(FX_panelLayout);
         FX_panelLayout.setHorizontalGroup(
@@ -408,38 +436,52 @@ public class main extends javax.swing.JFrame {
                 .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(saveFX_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(FX_panelLayout.createSequentialGroup()
-                        .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(preview_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(angle_lbl))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(angle_in, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(clearFX_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(FX_panelLayout.createSequentialGroup()
+                        .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(FX_panelLayout.createSequentialGroup()
                                 .addComponent(FX_lbl)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(effect_choose, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, Short.MAX_VALUE))
                             .addGroup(FX_panelLayout.createSequentialGroup()
-                                .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(preview_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(angle_lbl))
-                                .addGap(18, 18, 18)
-                                .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(FX_panelLayout.createSequentialGroup()
-                                        .addComponent(clearFX_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(angle_in))))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(brightness_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(53, 53, 53)))
+                        .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(effect_choose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(contrast_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FX_panelLayout.createSequentialGroup()
+                        .addGap(0, 2, Short.MAX_VALUE)
+                        .addComponent(brightness_in, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(contrast_in, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        FX_panelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {clearFX_btn, preview_btn});
+        FX_panelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {brightness_in, contrast_in});
 
         FX_panelLayout.setVerticalGroup(
             FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FX_panelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(FX_lbl)
                     .addComponent(effect_choose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(angle_lbl)
                     .addComponent(angle_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(brightness_in, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(contrast_in, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(brightness_lbl)
+                    .addComponent(contrast_lbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(FX_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(preview_btn)
                     .addComponent(clearFX_btn))
@@ -552,6 +594,10 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_savePath_btnMouseClicked
 
     private void exit_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exit_btnMouseClicked
+        File delete_temp = new File(System.getProperty("java.io.tmpdir") + "/imagemagick_preview");
+        if (removeDirectory.removeDirectory(delete_temp) == false) {
+            System.out.println("ERROR REMOVING TEMP DIRECTORY");
+        }
         System.exit(0);
     }//GEN-LAST:event_exit_btnMouseClicked
 
@@ -726,15 +772,118 @@ public class main extends javax.swing.JFrame {
                 }
                 break;
             }
+            case "Vertical Mirror": {
+                try {
+                    String execString = "convert '" + temp_path + "' -flip " + input_img[curr_img].getName();
+                    Runtime run = Runtime.getRuntime();
+                    Process process = run.exec(new String[]{"/bin/bash", "-c", execString}, null, temp_create);
+                    process.waitFor();
+                    BufferedImage img = ImageIO.read(temp_path);
+                    Image img_scaled = img.getScaledInstance(output_preview.getWidth(), output_preview.getHeight(), Image.SCALE_SMOOTH);
+                    output_preview.setIcon(new ImageIcon(img_scaled));
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e);
+                }
+                break;
+            }
+            case "Horizontal Mirror": {
+                try {
+                    String execString = "convert '" + temp_path + "' -flop " + input_img[curr_img].getName();
+                    Runtime run = Runtime.getRuntime();
+                    Process process = run.exec(new String[]{"/bin/bash", "-c", execString}, null, temp_create);
+                    process.waitFor();
+                    BufferedImage img = ImageIO.read(temp_path);
+                    Image img_scaled = img.getScaledInstance(output_preview.getWidth(), output_preview.getHeight(), Image.SCALE_SMOOTH);
+                    output_preview.setIcon(new ImageIcon(img_scaled));
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e);
+                }
+                break;
+            }
+            case "Charcoal Effect": {
+                try {
+                    String execString = "convert '" + temp_path + "' -charcoal 10 " + input_img[curr_img].getName();
+                    Runtime run = Runtime.getRuntime();
+                    Process process = run.exec(new String[]{"/bin/bash", "-c", execString}, null, temp_create);
+                    process.waitFor();
+                    BufferedImage img = ImageIO.read(temp_path);
+                    Image img_scaled = img.getScaledInstance(output_preview.getWidth(), output_preview.getHeight(), Image.SCALE_SMOOTH);
+                    output_preview.setIcon(new ImageIcon(img_scaled));
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e);
+                }
+                break;
+            }
+            case "Vignette": {
+                try {
+                    String execString = "convert '" + temp_path + "' -vignette 1 " + input_img[curr_img].getName();
+                    Runtime run = Runtime.getRuntime();
+                    Process process = run.exec(new String[]{"/bin/bash", "-c", execString}, null, temp_create);
+                    process.waitFor();
+                    BufferedImage img = ImageIO.read(temp_path);
+                    Image img_scaled = img.getScaledInstance(output_preview.getWidth(), output_preview.getHeight(), Image.SCALE_SMOOTH);
+                    output_preview.setIcon(new ImageIcon(img_scaled));
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e);
+                }
+                break;
+            }
+            case "Auto-Level": {
+                try {
+                    String execString = "convert '" + temp_path + "' -auto-level " + input_img[curr_img].getName();
+                    Runtime run = Runtime.getRuntime();
+                    Process process = run.exec(new String[]{"/bin/bash", "-c", execString}, null, temp_create);
+                    process.waitFor();
+                    BufferedImage img = ImageIO.read(temp_path);
+                    Image img_scaled = img.getScaledInstance(output_preview.getWidth(), output_preview.getHeight(), Image.SCALE_SMOOTH);
+                    output_preview.setIcon(new ImageIcon(img_scaled));
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e);
+                }
+                break;
+            }
+            case "Grayscale": {
+                try {
+                    String execString = "convert '" + temp_path + "' -colorspace gray " + input_img[curr_img].getName();
+                    Runtime run = Runtime.getRuntime();
+                    Process process = run.exec(new String[]{"/bin/bash", "-c", execString}, null, temp_create);
+                    process.waitFor();
+                    BufferedImage img = ImageIO.read(temp_path);
+                    Image img_scaled = img.getScaledInstance(output_preview.getWidth(), output_preview.getHeight(), Image.SCALE_SMOOTH);
+                    output_preview.setIcon(new ImageIcon(img_scaled));
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e);
+                }
+                break;
+            }
+            case "Brightness/Contrast": {
+                try {
+                    String execString = "convert '" + temp_path + "' -brightness-contrast " + brightness_in.getValue() + "x" + contrast_in.getValue() + " " + input_img[curr_img].getName();
+                    Runtime run = Runtime.getRuntime();
+                    Process process = run.exec(new String[]{"/bin/bash", "-c", execString}, null, temp_create);
+                    process.waitFor();
+                    BufferedImage img = ImageIO.read(temp_path);
+                    Image img_scaled = img.getScaledInstance(output_preview.getWidth(), output_preview.getHeight(), Image.SCALE_SMOOTH);
+                    output_preview.setIcon(new ImageIcon(img_scaled));
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e);
+                }
+                break;
+            }
         }
-
-        JOptionPane.showMessageDialog(null, "Effects Applied Successfully", "Effects Applied", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_preview_btnMouseClicked
 
     private void effect_chooseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_effect_chooseItemStateChanged
         if (effect_choose.getSelectedItem().equals("Rotate") || effect_choose.getSelectedItem().equals("Polaroid Effect")) {
             angle_in.setEnabled(true);
+        } else if (effect_choose.getSelectedItem().equals("Brightness/Contrast")) {
+            brightness_in.setEnabled(true);
+            brightness_lbl.setEnabled(true);
+            contrast_in.setEnabled(true);
+            contrast_lbl.setEnabled(true);
         } else {
+            brightness_in.setEnabled(false);
+            contrast_in.setEnabled(false);
             angle_in.setEnabled(false);
         }
     }//GEN-LAST:event_effect_chooseItemStateChanged
@@ -746,11 +895,24 @@ public class main extends javax.swing.JFrame {
         if (removeDirectory.removeDirectory(temp_create) == false) {
             System.out.println("ERROR REMOVING TEMP DIRECTORY");
         }
+        JOptionPane.showMessageDialog(null, "Effects Applied Successfully", "Effects Applied", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_saveFX_btnMouseClicked
 
     private void quality_sliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_quality_sliderStateChanged
         quality_val.setText("Quality: " + quality_slider.getValue() + "%");
     }//GEN-LAST:event_quality_sliderStateChanged
+
+    private void clearFX_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearFX_btnMouseClicked
+        File delete_temp = new File(System.getProperty("java.io.tmpdir") + "/imagemagick_preview");
+        if (removeDirectory.removeDirectory(delete_temp) == false) {
+            System.out.println("ERROR REMOVING TEMP DIRECTORY");
+        }
+        output_preview.setIcon(null);
+        effect_choose.setSelectedIndex(0);
+        angle_in.setEnabled(false);
+        brightness_in.setValue(0);
+        contrast_in.setValue(0);
+    }//GEN-LAST:event_clearFX_btnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -797,8 +959,12 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPanel FX_panel;
     private javax.swing.JTextField angle_in;
     private javax.swing.JLabel angle_lbl;
+    private javax.swing.JSlider brightness_in;
+    private javax.swing.JLabel brightness_lbl;
     private javax.swing.JButton clearFX_btn;
     private javax.swing.JButton clear_btn;
+    private javax.swing.JSlider contrast_in;
+    private javax.swing.JLabel contrast_lbl;
     private javax.swing.JPanel conversion_panel;
     private javax.swing.JButton convert_btn;
     private javax.swing.JLabel count_lbl;
