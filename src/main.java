@@ -58,6 +58,8 @@ public class main extends javax.swing.JFrame {
         clear_btn = new javax.swing.JButton();
         filename_lbl = new javax.swing.JLabel();
         filename_out = new javax.swing.JLabel();
+        quality_slider = new javax.swing.JSlider();
+        quality_val = new javax.swing.JLabel();
         output_control = new javax.swing.JPanel();
         savePath_btn = new javax.swing.JButton();
         save_out = new javax.swing.JTextArea();
@@ -67,7 +69,7 @@ public class main extends javax.swing.JFrame {
         exit_btn = new javax.swing.JButton();
         to_lbl = new javax.swing.JLabel();
         pdf_filename = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        pdfname_lbl = new javax.swing.JLabel();
         prev_btn = new javax.swing.JButton();
         next_btn = new javax.swing.JButton();
         count_lbl = new javax.swing.JLabel();
@@ -117,19 +119,38 @@ public class main extends javax.swing.JFrame {
         filename_out.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         filename_out.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        quality_slider.setMajorTickSpacing(1);
+        quality_slider.setMinimum(1);
+        quality_slider.setBorder(javax.swing.BorderFactory.createTitledBorder("Conversion Quality"));
+        quality_slider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                quality_sliderStateChanged(evt);
+            }
+        });
+
+        quality_val.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        quality_val.setForeground(new java.awt.Color(255, 0, 0));
+        quality_val.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        quality_val.setText("50");
+        quality_val.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         javax.swing.GroupLayout input_controlLayout = new javax.swing.GroupLayout(input_control);
         input_control.setLayout(input_controlLayout);
         input_controlLayout.setHorizontalGroup(
             input_controlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(input_controlLayout.createSequentialGroup()
+                .addComponent(quality_slider, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, input_controlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(input_controlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(filename_out, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(input_controlLayout.createSequentialGroup()
+                .addGroup(input_controlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(quality_val, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(filename_out, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, input_controlLayout.createSequentialGroup()
                         .addComponent(filename_lbl)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(select_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(clear_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(select_btn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(clear_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         input_controlLayout.setVerticalGroup(
@@ -143,7 +164,11 @@ public class main extends javax.swing.JFrame {
                 .addComponent(filename_lbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filename_out, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(quality_slider, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(quality_val)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         output_control.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -166,18 +191,20 @@ public class main extends javax.swing.JFrame {
             .addGroup(output_controlLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(output_controlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(savePath_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(save_out, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(output_controlLayout.createSequentialGroup()
+                        .addComponent(save_out, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(savePath_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         output_controlLayout.setVerticalGroup(
             output_controlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(output_controlLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(savePath_btn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(save_out, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(save_out, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         conversion_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Conversion Options"));
@@ -210,8 +237,8 @@ public class main extends javax.swing.JFrame {
         pdf_filename.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pdf_filename.setEnabled(false);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Set Filename:");
+        pdfname_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pdfname_lbl.setText("Set Filename:");
 
         javax.swing.GroupLayout conversion_panelLayout = new javax.swing.GroupLayout(conversion_panel);
         conversion_panel.setLayout(conversion_panelLayout);
@@ -221,22 +248,21 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(conversion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(conversion_panelLayout.createSequentialGroup()
-                        .addComponent(to_lbl)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(conversion_panelLayout.createSequentialGroup()
                         .addGroup(conversion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, conversion_panelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(convert_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(conversion_panelLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(conversion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, conversion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(pdf_filename, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(outputFileType, javax.swing.GroupLayout.Alignment.TRAILING, 0, 152, Short.MAX_VALUE))
-                    .addComponent(exit_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(to_lbl)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(conversion_panelLayout.createSequentialGroup()
+                                .addComponent(pdfname_lbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(conversion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(outputFileType, 0, 222, Short.MAX_VALUE)
+                            .addComponent(pdf_filename)))
+                    .addGroup(conversion_panelLayout.createSequentialGroup()
+                        .addComponent(convert_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(exit_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 17, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -249,10 +275,10 @@ public class main extends javax.swing.JFrame {
                     .addComponent(outputFileType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(to_lbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(conversion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pdf_filename, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(conversion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pdfname_lbl)
+                    .addComponent(pdf_filename, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(conversion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exit_btn)
                     .addComponent(convert_btn))
@@ -285,9 +311,14 @@ public class main extends javax.swing.JFrame {
             input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(input_shower, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(conversion_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(input_shower, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(conversion_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(input_panelLayout.createSequentialGroup()
+                        .addComponent(prev_btn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                        .addComponent(next_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(input_panelLayout.createSequentialGroup()
@@ -297,17 +328,12 @@ public class main extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(img_count, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(input_panelLayout.createSequentialGroup()
-                                .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(input_control, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(input_panelLayout.createSequentialGroup()
-                                        .addComponent(prev_btn)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                                        .addComponent(next_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(input_control, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(input_panelLayout.createSequentialGroup()
                         .addComponent(output_control, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(24, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         input_panelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {next_btn, prev_btn});
@@ -315,26 +341,27 @@ public class main extends javax.swing.JFrame {
         input_panelLayout.setVerticalGroup(
             input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input_panelLayout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(14, 14, 14)
+                .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(input_panelLayout.createSequentialGroup()
-                        .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(img_count, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(count_lbl))
-                        .addGap(18, 18, 18)
-                        .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(next_btn)
-                            .addComponent(prev_btn))
+                        .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(count_lbl)
+                            .addComponent(img_count, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(input_control, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(input_shower, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(conversion_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(input_panelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(output_control, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(input_shower, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(next_btn)
+                            .addComponent(prev_btn))))
+                .addGroup(input_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(input_panelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(conversion_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(input_panelLayout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(output_control, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         output_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Output Image"));
@@ -446,7 +473,7 @@ public class main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(input_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(output_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(heading_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -567,7 +594,7 @@ public class main extends javax.swing.JFrame {
                     for (int x = 0; x < input_img.length; x++) {
                         curr_img = x;
                         File output_filename = new File(save_path.toString() + "/" + input_img[curr_img].getName().substring(0, input_img[curr_img].getName().length() - 4) + "_converted.jpg");
-                        String execString = "convert " + "\'" + input_img[curr_img].getAbsolutePath() + "\'" + " " + "\'" + output_filename.getName() + "\'";
+                        String execString = "convert " + "\'" + input_img[curr_img].getAbsolutePath() + "\'" + " -quality " + quality_slider.getValue() + " " + "\'" + output_filename.getName() + "\'";
                         System.out.println(save_path);
                         System.out.println(execString);
                         Runtime run = Runtime.getRuntime();
@@ -581,7 +608,7 @@ public class main extends javax.swing.JFrame {
                     for (int x = 0; x < input_img.length; x++) {
                         curr_img = x;
                         File output_filename = new File(save_path.toString() + "/" + input_img[curr_img].getName().substring(0, input_img[curr_img].getName().length() - 4) + "_converted.png");
-                        String execString = "convert " + "\'" + input_img[curr_img].getAbsolutePath() + "\'" + " " + "\'" + output_filename.getName() + "\'";
+                        String execString = "convert " + "\'" + input_img[curr_img].getAbsolutePath() + "\'" + " -quality " + quality_slider.getValue() + " " + "\'" + output_filename.getName() + "\'";
                         System.out.println(save_path);
                         System.out.println(execString);
                         Runtime run = Runtime.getRuntime();
@@ -594,7 +621,7 @@ public class main extends javax.swing.JFrame {
                     for (int x = 0; x < input_img.length; x++) {
                         curr_img = x;
                         File output_filename = new File(save_path.toString() + "/" + input_img[curr_img].getName().substring(0, input_img[curr_img].getName().length() - 4) + "_converted.gif");
-                        String execString = "convert " + "\'" + input_img[curr_img].getAbsolutePath() + "\'" + " " + "\'" + output_filename.getName() + "\'";
+                        String execString = "convert " + "\'" + input_img[curr_img].getAbsolutePath() + "\'" + " -quality " + quality_slider.getValue() + " " + "\'" + output_filename.getName() + "\'";
                         System.out.println(save_path);
                         System.out.println(execString);
                         Runtime run = Runtime.getRuntime();
@@ -607,7 +634,7 @@ public class main extends javax.swing.JFrame {
                     for (int x = 0; x < input_img.length; x++) {
                         curr_img = x;
                         File output_filename = new File(save_path.toString() + "/" + input_img[curr_img].getName().substring(0, input_img[curr_img].getName().length() - 4) + "_converted.bmp");
-                        String execString = "convert " + "\'" + input_img[curr_img].getAbsolutePath() + "\'" + " " + "\'" + output_filename.getName() + "\'";
+                        String execString = "convert " + "\'" + input_img[curr_img].getAbsolutePath() + "\'" + " -quality " + quality_slider.getValue() + " " + "\'" + output_filename.getName() + "\'";
                         System.out.println(save_path);
                         System.out.println(execString);
                         Runtime run = Runtime.getRuntime();
@@ -621,7 +648,7 @@ public class main extends javax.swing.JFrame {
                     for (int x = 0; x < input_img.length; x++) {
                         curr_img = x;
                         File output_filename = new File(save_path.toString() + "/" + input_img[curr_img].getName().substring(0, input_img[curr_img].getName().length() - 4) + "_converted.pdf");
-                        String execString = "convert " + "\'" + input_img[curr_img].getAbsolutePath() + "\'" + " " + "\'" + output_filename.getName() + "\'";
+                        String execString = "convert " + "\'" + input_img[curr_img].getAbsolutePath() + "\'" + " -quality " + quality_slider.getValue() + " " + "\'" + output_filename.getName() + "\'";
                         System.out.println(save_path);
                         System.out.println(execString);
                         Runtime run = Runtime.getRuntime();
@@ -721,6 +748,10 @@ public class main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_saveFX_btnMouseClicked
 
+    private void quality_sliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_quality_sliderStateChanged
+        quality_val.setText("Quality: " + quality_slider.getValue() + "%");
+    }//GEN-LAST:event_quality_sliderStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -780,15 +811,17 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPanel input_control;
     private javax.swing.JPanel input_panel;
     private javax.swing.JLabel input_shower;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton next_btn;
     private javax.swing.JComboBox outputFileType;
     private javax.swing.JPanel output_control;
     private javax.swing.JPanel output_panel;
     private javax.swing.JLabel output_preview;
     private javax.swing.JTextField pdf_filename;
+    private javax.swing.JLabel pdfname_lbl;
     private javax.swing.JButton prev_btn;
     private javax.swing.JButton preview_btn;
+    private javax.swing.JSlider quality_slider;
+    private javax.swing.JLabel quality_val;
     private javax.swing.JButton saveFX_btn;
     private javax.swing.JButton savePath_btn;
     private javax.swing.JTextArea save_out;
